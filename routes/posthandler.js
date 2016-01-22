@@ -11,3 +11,16 @@ posthandler.post('/',upload.single('estmt'), function(req, res, next) {
 });
 
 module.exports = posthandler;
+
+
+//var upload = multer({dest:'./uploads/', fileFilter:function(req, file, cb) {
+  //to reject
+  //cb(null,false);
+  //
+  //to accept
+//  cb(null,true);
+  //
+  //You can always pass an error if something goes wrong
+  //cb(new Error('I don\'t have a clue!'));
+//}
+

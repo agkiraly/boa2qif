@@ -4,21 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var multer = require('multer');
-//var upload = multer({dest:'./uploads/', fileFilter:function(req, file, cb) {
-  //to reject
-  //cb(null,false);
-  //
-  //to accept
-//  cb(null,true);
-  //
-  //You can always pass an error if something goes wrong
-  //cb(new Error('I don\'t have a clue!'));
-//}
-
-//});
-
-var upload = multer({dest:'./uploads/'});
 
 var routes = require('./routes/index');
 var posthandler = require('./routes/posthandler');
@@ -43,11 +28,11 @@ app.use('/', posthandler);
 app.use('/users', users);
 
 // catch 404 and forward to error handler
-//app.use(function(req, res, next) {
-//  var err = new Error('Not Found');
-//  err.status = 404;
-//  next(err);
-//});
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
 // error handlers
 
@@ -73,11 +58,4 @@ app.use(function(err, req, res, next) {
   });
 });
 
-//app.post('/',upload.single('estmt'), function(req, res, next) {
-  //req.file is the 'estmt' file
-  //req.body will hold the text fields, if any
-//  console.log(req.body);
-//  res.status(204).end();
-//});
-//app.post('/', posthandler);
 module.exports = app;
