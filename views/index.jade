@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1 Bank of America PDF to QIF statement converter.
+  p Welcome! Please upload a BoA statement pdf.
+
+  form(method="post", enctype="multipart/form-data", action="/upload")
+  p 
+  input(type="file", name="estmt")
+  p 
+  input(type="submit", value="submit")
+
+
