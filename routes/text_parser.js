@@ -58,22 +58,6 @@ function cb(err,data) {
  }
 }
 
-
-//buffer = new Buffer("some content\n");
-
-//fs.open(outFile, 'w', function(err, fd) {
-//    if (err) {
-//        throw 'error opening file: ' + err;
-//    }
-//
-//    fs.write(fd, buffer, 0, buffer.length, null, function(err) {
-//        if (err) throw 'error writing file: ' + err;
-//        fs.close(fd, function() {
-//            console.log('file written');
-//        })
-//    });
-//});
-
 function reFormatDate(d) {
   var dParts = d.split('/');
   return '20' + trimStr(dParts[2]) + '-' + dParts[0] + '-' + dParts[1] + '|';
@@ -101,17 +85,6 @@ function prepInstance(str) {
 function trimStr(str) {
   return str.replace(/^\s+|\s+$/g,'');
 }
-
-//function getDateReg() {
-//  return /(\d{2}\/\d{2}\/\d{2})/g;
-//}
-//function getDateReg(pad) {
-//  if (pad) {
-//    return /^\s+(\d{2}\/\d{2}\/\d{2})/g;
-//  } else {
-//    return /(\d{2}\/\d{2}\/\d{2})/g;
-//  } 
-//}
 
 function findFirstDate(line) {
   //var re = new RegExp (/^s+/ + getDateReg());
