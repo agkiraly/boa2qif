@@ -14,12 +14,20 @@ var upload = multer({
     cb(null,true);
   }
 });
+var pdftotext = require('./estmt_pdftotext').process;
 
 posthandler.post('/',upload.single('estmt'), function(req, res, next) {
   //req.file is the 'estmt' file
   console.dir(req.file);
   //req.body will hold any text fields
   //console.log(req.body);
+  var fileinfo = {
+    filepath: path.resolve(__dirname, '..', req.file.path),
+    destination: path.resolve(__dirname, '../uploads/processed/' + req.file.filename + '.txt')
+  };
+  console.log(fileinfo);
+  console.log(pdftotext);
+  pdftotext(fileInfo); 
   res.status(204).end();
 });
 
