@@ -25,9 +25,7 @@ posthandler.post('/',upload.single('estmt'), function(req, res, next) {
     filepath: path.resolve(__dirname, '..', req.file.path),
     destination: path.resolve(__dirname, '../uploads/processed/' + req.file.filename + '.txt')
   };
-  console.log(fileinfo);
-  console.log(pdftotext);
-  pdftotext(fileInfo); 
+  pdftotext(fileinfo); 
   res.status(204).end();
 });
 
