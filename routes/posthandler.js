@@ -1,9 +1,10 @@
+var config = require('../config/config.js');
 var express = require('express');
 var posthandler = express.Router();
 var multer = require('multer');
 var path = require('path');
 var upload = multer({
-  dest:'./uploads/',
+  dest: config.uploaddir,
   fileFilter: function(req, file, cb) {
     // console.dir(file);
 
@@ -17,16 +18,15 @@ var upload = multer({
 var pdftotext = require('./estmt_pdftotext').process;
 
 posthandler.post('/',upload.single('estmt'), function(req, res, next) {
-  //req.file is the 'estmt' file
-  console.dir(req.file);
-  //req.body will hold any text fields
-  //console.log(req.body);
-  var fileinfo = {
-    filepath: path.resolve(__dirname, '..', req.file.path),
-    destination: path.resolve(__dirname, '../uploads/processed/' + req.file.filename + '.txt')
-  };
-  pdftotext(fileinfo); 
-  res.status(204).end();
+  // req.file is the 'estmt' file
+  // console.dir(req.file);
+  // req.body will hold any text fields
+  // console.log(req.body);
+  var opts = {
+    filepath: req.file.path
+  }
+  pdftotext(req, res, opts); 
+  // res.status(204).end();
 });
 
 module.exports = posthandler;
