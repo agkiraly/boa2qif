@@ -24,9 +24,9 @@ posthandler.post('/',upload.single('estmt'), function(req, res, next) {
   // console.log(req.body);
   var opts = {
     filepath: req.file.path
-  }
+  };
+
   pdftotext(req, res, opts); 
-  // res.status(204).end();
 });
 
 module.exports = posthandler;
