@@ -56,8 +56,11 @@ var text_parser =  function() {
         if (err) {
           throw err;
         }
-        console.log(destination + ' saved!');
-        res.status(204).end();
+        // console.log(destination + ' saved!');
+        res.download(destination);
+        // res.status(200).end(); // for some reason, the download does
+        // not initiate when res.end is sent.
+        // need to clean up somehow
       });
     }
   }
