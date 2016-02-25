@@ -23,9 +23,11 @@ var text_parser =  function() {
           preppedStr,
           parts,
           i,
-          j
+          j,
+          write
       ;
 
+      write = true;
       outfile = ['!Type:Bank'];
       
       lines = splitNL(data);
@@ -44,24 +46,27 @@ var text_parser =  function() {
           curLine = curLine.replace(/\s+/g,' ');
           occurences = curLine.split('|');
           for (j=1; j<occurences.length; j++) {
+            // console.log(occurences[j]);
             preppedStr = prepInstance(occurences[j]);
             parts = getParts(preppedStr);
-            //console.log(parts);
+            // console.log(parts);
             outfile.push('D'+parts.D,'T'+parts.T,'P'+parts.P,'^');
           }
         }
       }
       // console.log(outfile);
-      fs.writeFile(destination, outfile.join('\n'), function (err) {
-        if (err) {
-          throw err;
-        }
-        // console.log(destination + ' saved!');
-        res.download(destination);
-        // res.status(200).end(); // for some reason, the download does
-        // not initiate when res.end is sent.
-        // need to clean up somehow
-      });
+      if (write) {
+        fs.writeFile(destination, outfile.join('\n'), function (err) {
+          if (err) {
+            throw err;
+          }
+          // console.log(destination + ' saved!');
+          res.download(destination);
+          // res.status(200).end(); // for some reason, the download does
+          // not initiate when res.end is sent.
+          // also need to clean up tmp upload directory
+        });
+      }
     }
   }
 
@@ -75,7 +80,7 @@ var text_parser =  function() {
     var partsAr = str.split('|');
     parts.D = partsAr[0];
     parts.P = partsAr[1];
-    parts.T = partsAr[2]; // we might need to replace commas here
+    parts.T = partsAr[2].replace(/,+/,'');
     return parts;
   }
 
@@ -83,7 +88,7 @@ var text_parser =  function() {
     var dateRegExp = /^(\d{2}\/\d{2}\/\d{2})\s?/; 
     str = str.replace(/^\s+|\s+$/g,'');
     str = str.replace(/'/g,'');
-    str = str.replace(/\s?(-?)([\d\.]+)$/,'|$1$2');
+    str = str.replace(/\s?(-?)([\d\.,]+)$/,'|$1$2');
     str = str.replace(dateRegExp,reFormatDate);
     return str;
   }
